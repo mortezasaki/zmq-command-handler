@@ -23,6 +23,10 @@ def valid_port(port):
     Used in argparse
     """
     port = int(port)
-    if 1000 < port > 65535:
-        raise ArgumentTypeError("Port must be between 1000 and 65535")
-    return port
+    if 1000 <= port <= 65535:
+        return port
+
+    raise ArgumentTypeError("Port must be between 1000 and 65535")
+
+
+valid_port(10000)
