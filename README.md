@@ -16,16 +16,16 @@ pip install -r requirements.txt
 
 Run the following command if a new certificate is required:
 ```bash
-python generate_certificates.py
+python src/generate_certificates.py
 ```
 
 ## Usage
 ### Server
 ```bash
-python server.py
+python src/server.py
 ```
 
 ### Client
 ```bash
-python client.py --file "samples/commands.js"
+python src/client.py --file "samples/commands.js"
 ```
