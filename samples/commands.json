@@ -1,0 +1,33 @@
+[
+  {
+    "command_type": "os",
+    "command_name": "sleep",
+    "parameters": ["2"]
+  },
+  {
+    "command_type": "compute",
+    "expersion":"((30+10)*5+1)"
+  },
+  {
+    "command_type": "os",
+    "command_name": "ls",
+    "parameters": ["-h", "-l"]
+  },
+  {
+    "note": "Invalid parameters",
+    "command_type": "os",
+    "command_name": "ls",
+    "parameters": ["-2"]
+  },
+  {
+    "note": "Math expersion with invalid syntax",
+    "command_type": "compute",
+    "expersion":"((30+10)*5+1))"
+  },
+  {
+    "note": "A command that cannot be executed",
+    "command_type": "os",
+    "command_name": "rm",
+    "parameters": ["test.txt", "-rf"]
+  }
+]
