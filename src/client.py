@@ -18,7 +18,9 @@ from utils.functions import banner, valid_port
 
 def get_options(argv: List[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser()
-    parser.add_argument("-p", "--port", type=valid_port, default=5560, help="port number")
+    parser.add_argument(
+        "-p", "--port", type=valid_port, default=5560, help="port number"
+    )
     parser.add_argument("-v", "--verbose", action="store_true", help="verbose mode")
     parser.add_argument(
         "--host",
@@ -37,10 +39,9 @@ def get_options(argv: List[str]) -> argparse.Namespace:
     return options
 
 
-
 def connect(host, port):
     context = SerializingContext()
-    socket = context.socket(zmq.REQ) # pylint: disable=no-member
+    socket = context.socket(zmq.REQ)  # pylint: disable=no-member
     # We need two certificates, one for the client and one for
     # the server. The client must know the server's public key
     # to make a CURVE connection.
@@ -70,16 +71,22 @@ def parse_json(json_file):
 
     # Use of structural pattern matching in Python 3.10 or higher
     if sys.version_info[0] >= 3 and sys.version_info[1] >= 10:
-        for data in json_data:
-            match data:
-                case {"command_type": "os"}:
-                    os_coommand = OSCommand(data["command_name"], data["parameters"])
-                    commands.append(os_coommand)
-                case {"command_type": "compute"}:
-                    math_coommand = MathCommand(command=data["expersion"])
-                    commands.append(math_coommand)
-                case _:
-                    raise ValueError("Invalid command type")
+        pass
+        ## Black formatter can't parse match
+        ## This section has been commented because of this reason
+
+        # for data in json_data:
+        #     # fmt: off
+        #     match data:
+        #     # fmt: on
+        #         case {"command_type": "os"}:
+        #             os_coommand = OSCommand(data["command_name"], data["parameters"])
+        #             commands.append(os_coommand)
+        #         case {"command_type": "compute"}:
+        #             math_coommand = MathCommand(command=data["expersion"])
+        #             commands.append(math_coommand)
+        #         case _:
+        #             raise ValueError("Invalid command type")
     else:
         for data in json_data:
             if data["command_type"] == "os":
@@ -94,8 +101,6 @@ def parse_json(json_file):
     return commands
 
 
-
-
 def send_data(socket, json_file):
     parsed_commands = parse_json(json_file)
     socket.send_zipped_pickle(parsed_commands)
@@ -106,10 +111,12 @@ def get_response(socket):
     return response
 
 
-def main(argv: List[str] = sys.argv[1:]) -> None: # pylint: disable=dangerous-default-value
+def main(
+    argv: List[str] = sys.argv[1:],
+) -> None:  # pylint: disable=dangerous-default-value
     """Client main function."""
     options = get_options(argv)
-    
+
     if options.verbose:
         level = logging.DEBUG
     else:
@@ -126,8 +133,8 @@ def main(argv: List[str] = sys.argv[1:]) -> None: # pylint: disable=dangerous-de
     sleep(1)
     for resp in get_response(socket):
         print("=" * 100, "\n", resp)
-    
-    print("\n","/" * 100, "\n\n")
+
+    print("\n", "/" * 100, "\n\n")
 
     logging.info("Results were successfully received.")
 
