@@ -27,5 +27,5 @@ python src/server.py
 
 ### Client
 ```bash
-python src/client.py --file "samples/commands.js"
+python src/client.py --file "samples/commands.json"
 ```
