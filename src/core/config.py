@@ -1,9 +1,9 @@
 from pathlib import Path
 
-from pydantic import BaseSettings
 
+class Settings:
+    """App settings"""
 
-class Settings(BaseSettings):
     HOST: str = "127.0.0.1"
     PORT: int = 5560
     BASE_DIR = Path(__file__).resolve().parent.parent.parent
