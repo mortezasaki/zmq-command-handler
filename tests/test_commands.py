@@ -1,6 +1,7 @@
 import unittest
 
-from src.models.command import MathCommand, OSCommand  # pylint: disable=import-error
+# pylint: disable=import-error
+from src.models.command import MathCommand, OSCommand
 
 
 class TestMathCommand(unittest.TestCase):

@@ -70,5 +70,7 @@ class MathCommand(BaseCommand):
                 err_msg = f"The use of '{name}' is not allowed"
                 return CommandResult(self.command, err_msg)
 
-        res = eval(code, {"__builtins__": {}}, MATH_ALLOWED_NAMES)  # pylint: disable=eval-used
+        res = eval(
+            code, {"__builtins__": {}}, MATH_ALLOWED_NAMES
+        )  # pylint: disable=eval-used
         return CommandResult(self.command, res, success=True)

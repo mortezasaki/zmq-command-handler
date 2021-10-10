@@ -17,7 +17,9 @@ from utils.functions import banner, valid_port
 def get_options(argv: List[str]) -> argparse.Namespace:
     """Get options from command line"""
     parser = argparse.ArgumentParser()
-    parser.add_argument("-p", "--port", type=valid_port, default=settings.PORT, help="port number")
+    parser.add_argument(
+        "-p", "--port", type=valid_port, default=settings.PORT, help="port number"
+    )
     parser.add_argument("-v", "--verbose", action="store_true", help="verbose mode")
     options = parser.parse_args(argv)
     return options
@@ -69,7 +71,9 @@ def execute_commands(commands: ClientCommands) -> CommandResult:
     return responses
 
 
-def main(argv: List[str] = sys.argv[1:]) -> None:  # pylint: disable=dangerous-default-value
+def main(
+    argv: List[str] = sys.argv[1:],
+) -> None:  # pylint: disable=dangerous-default-value
     """Set up a ZMQ server, listen for client commands, and reply to them."""
 
     options = get_options(argv)
