@@ -1,3 +1,4 @@
+from abc import ABC
 from dataclasses import dataclass, field
 from typing import List, NamedTuple
 
@@ -23,8 +24,8 @@ class CommandResult(NamedTuple):
         )
 
 
-@dataclass(frozen=True)
-class BaseCommand:
+@dataclass
+class BaseCommand(ABC):
     """Base command"""
 
     command: str
@@ -33,7 +34,7 @@ class BaseCommand:
         """run the command"""
 
 
-@dataclass(frozen=True)
+@dataclass
 class OSCommand(BaseCommand):
     parameters: List[str] = field(default_factory=list)
 
@@ -55,6 +56,7 @@ class OSCommand(BaseCommand):
         return CommandResult(cmd, res, success=True)
 
 
+@dataclass
 class MathCommand(BaseCommand):
     def run(self) -> CommandResult:
         """Evaluate a math expression."""
@@ -70,7 +72,5 @@ class MathCommand(BaseCommand):
                 err_msg = f"The use of '{name}' is not allowed"
                 return CommandResult(self.command, err_msg)
 
-        res = eval(
-            code, {"__builtins__": {}}, MATH_ALLOWED_NAMES
-        )  # pylint: disable=eval-used
+        res = eval(code, {"__builtins__": {}}, MATH_ALLOWED_NAMES)  # pylint: disable=eval-used
         return CommandResult(self.command, res, success=True)
