@@ -71,22 +71,18 @@ def parse_json(json_file):
 
     # Use of structural pattern matching in Python 3.10 or higher
     if sys.version_info[0] >= 3 and sys.version_info[1] >= 10:
-        pass
-        ## Black formatter can't parse match
-        ## This section has been commented because of this reason
-
-        # for data in json_data:
-        #     # fmt: off
-        #     match data:
-        #     # fmt: on
-        #         case {"command_type": "os"}:
-        #             os_coommand = OSCommand(data["command_name"], data["parameters"])
-        #             commands.append(os_coommand)
-        #         case {"command_type": "compute"}:
-        #             math_coommand = MathCommand(command=data["expersion"])
-        #             commands.append(math_coommand)
-        #         case _:
-        #             raise ValueError("Invalid command type")
+        for data in json_data:
+            # fmt: off
+            match data:
+            # fmt: on
+                case {"command_type": "os"}:
+                    os_coommand = OSCommand(data["command_name"], data["parameters"])
+                    commands.append(os_coommand)
+                case {"command_type": "compute"}:
+                    math_coommand = MathCommand(command=data["expersion"])
+                    commands.append(math_coommand)
+                case _:
+                    raise ValueError("Invalid command type")
     else:
         for data in json_data:
             if data["command_type"] == "os":
