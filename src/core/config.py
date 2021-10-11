@@ -13,5 +13,11 @@ class Settings:
     PUBLIC_KEYS_DIR = KEYS_DIR / "public_keys"
     SECRET_KEYS_DIR = KEYS_DIR / "private_keys"
 
+    MATH_ALLOWED_NAMES = {
+        k: v for k, v in __import__("math").__dict__.items() if not k.startswith("__")
+    }
+
+    OS_ALLOWED_COMMANDS = ("cp", "ls", "cat", "sleep")
+
 
 settings = Settings()
